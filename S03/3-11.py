@@ -45,3 +45,4 @@ Max2 = np.max(np.max(IFFTt))
 plt.subplot(122)
 plt.imshow(IFFTt / Max2)
 plt.show()
+
