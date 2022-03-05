@@ -1,5 +1,8 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+plt.gray()
+
 
 # Read image from file in gray scale mode
 im = cv2.imread("Car.jpg", cv2.IMREAD_GRAYSCALE)
@@ -18,13 +21,23 @@ for x in range(557, 613):
     for y in range(258, 526):
         mask2[x, y] = 0.0
 
-# Plot image
-cv2.imshow("Original Image", im)
-cv2.imshow("Mask 1", mask1)
-cv2.imshow("And Result", cv2.bitwise_and(img, mask1))
-cv2.imshow("Mask 2", mask2)
-cv2.imshow("Or Result", cv2.bitwise_or(img, mask2))
-# Keep open images until press 0 key
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
+plt.figure(1)
+plt.subplot(2, 3, 1)
+plt.imshow(im)
+plt.title("Original Image")
+plt.subplot(2, 3, 4)
+plt.imshow(im)
+plt.title("Original Image")
+plt.subplot(2, 3, 2)
+plt.imshow(mask1)
+plt.title("Mask 1")
+plt.subplot(2, 3, 3)
+plt.imshow(cv2.bitwise_and(img, mask1))
+plt.title("And Result")
+plt.subplot(2, 3, 5)
+plt.imshow(mask2)
+plt.title("Mask 2")
+plt.subplot(2, 3, 6)
+plt.imshow(cv2.bitwise_or(img, mask2))
+plt.title("Or Result")
+plt.show()

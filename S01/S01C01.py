@@ -1,16 +1,24 @@
 import cv2
+import matplotlib.pyplot as plt
+plt.gray()
+
 
 # Read image file in default mode
-Img = cv2.imread("hafez.jpeg")
+Img = cv2.imread("hafez.jpeg", cv2.IMREAD_UNCHANGED)
 # Read image file in gray scale mode
 ImgGray = cv2.imread("hafez.jpeg", cv2.IMREAD_GRAYSCALE)
 # Set threshold for map gray scale image to binary(black/white)
-Binary = cv2.threshold(ImgGray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+_, Binary = cv2.threshold(ImgGray, 128, 255, cv2.THRESH_BINARY)
 # Plot image
-cv2.imshow("Original Image", Img)
-cv2.imshow("Gray Image", ImgGray)
-cv2.imshow("Binary Image", Binary)
-# Keep open images until press 0 key
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+plt.figure(1)
+plt.subplot(1, 3, 1)
+plt.imshow(Img)
+plt.title("Original Image")
+plt.subplot(1, 3, 2)
+plt.imshow(ImgGray)
+plt.title("Grayscale Image")
+plt.subplot(1, 3, 3)
+plt.imshow(Binary)
+plt.title("Binary Image")
+plt.show()
 

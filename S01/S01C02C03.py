@@ -1,35 +1,49 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+plt.gray()
+
+
+def img2bitmap(img: np.ndarray) -> list:
+    if img.dtype != np.uint8 or img.ndim > 2:
+        raise ValueError("Image is not uint8 or gray")
+    bit_mat = [np.zeros(img.shape, dtype=np.uint8) for _ in range(8)]
+    for row_number in range(img.shape[0]):
+        for column_number in range(img.shape[1]):
+            binary = format(img[row_number][column_number], 'b')
+            for idx, bit in enumerate("".join(reversed(binary))[:]):
+                bit_mat[idx][row_number, column_number] = 2 ** idx if int(bit) == 1 else 0
+    return bit_mat
+
 
 # Read image from file in default mode
-img = cv2.imread('AzadiTower.jpg', 0)
+img = cv2.imread('AzadiTower.jpg', cv2.IMREAD_GRAYSCALE)
 # Make empty list to buffering bit plane
-out = []
-# Use loop to Select related bits to put in their own bit plane
-for k in range(0, 8):
-    # create an image for the k bit plane
-    plane = np.full((img.shape[0], img.shape[1]), 2 ** k, dtype=np.uint8)
-    # execute bitwise and operation
-    res = cv2.bitwise_and(plane, img)
-    # multiply ones (bit plane sliced) with 255 just for better visualization
-    x = res * 255
-    # append to the output list
-    out.append(x)
+out = img2bitmap(img)
 
 # Show every bit plane as separated images
-for i in range(0, 8):
+plt.figure(1)
+plt.subplot(2, 4, 1)
+for i in range(8):
+    plt.subplot(2, 4, i + 1)
     # Convert [0 - 255] to [0.0 - 1.0]
     out[i] = cv2.normalize(out[i].astype('float'), None, 0.0, 1.0, cv2.NORM_MINMAX)
-    cv2.imshow(f"bit plane {i}", np.array(out[i]))
+    plt.imshow(np.array(out[i]))
+    plt.title(f"bit plane {i}")
+plt.show()
 
-# Recovery original image from bit planes
-OriginalImage = 2 * (2 * (2 * (
-        2 * (2 * (2 * (2 * np.array(out[7]) + np.array(out[6])) + np.array(out[5])) + np.array(out[4])) +
-        np.array(out[3])) + np.array(out[2])) + np.array(out[1])) + np.array(out[0])
-# Convert [0 - 255] to [0.0 - 1.0]
-OriginalImage = cv2.normalize(OriginalImage.astype('float'), None, 0.0, 1.0, cv2.NORM_MINMAX)
-# Plot image
-cv2.imshow("Original image", OriginalImage)
-# Keep open images until press 0 key
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+OriginalImage = np.zeros(img.shape, dtype=np.uint8)
+for i in range(OriginalImage.shape[0]):
+    for j in range(OriginalImage.shape[1]):
+        for data in range(8):
+            x = np.array([OriginalImage[i, j]], dtype=np.uint8)
+            data = np.array([data], dtype=np.uint8)
+            flag = np.array([0 if out[data[0]][i, j] == 0 else 1], dtype=np.uint8)
+            mask = flag << data[0]
+            x[0] = (x[0] & ~mask) | ((flag[0] << data[0]) & mask)
+            OriginalImage[i, j] = x[0]
+
+plt.figure(2)
+plt.imshow(OriginalImage)
+plt.title("Original image")
+plt.show()
