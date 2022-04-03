@@ -10,8 +10,8 @@ Nhist = cv2.calcHist([img], [0], None, [256], [0, 256]) / np.size(img)
 CDFhist = np.cumsum(Nhist)
 # Make new buffer to make image
 img2 = np.zeros(img.shape).astype("uint8")
-for i in range(0, img.shape[0]):
-    for j in range(0, img.shape[1]):
+for i in range(img.shape[0]):
+    for j in range(img.shape[1]):
         img2[i, j] = (CDFhist[img[i, j]])
 
 img2 = cv2.normalize(img2.astype('float'), None, 0, 255, cv2.NORM_MINMAX)

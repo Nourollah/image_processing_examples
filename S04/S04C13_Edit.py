@@ -42,11 +42,7 @@ for kk in range(np.floor(w / 2 + 1).astype("int"), (m - np.floor(w / 2)).astype(
         m = np.median(win[:])
         # o = np.zeros([kk, j])
         # o =
-        if (IMgFd[kk, j] / m) >= T:
-            Fimage[kk, j] = m
-        else:
-            Fimage[kk, j] = IMgFd[kk, j]
-
+        Fimage[kk, j] = m if (IMgFd[kk, j] / m) >= T else IMgFd[kk, j]
 Z = Fimage * np.exp()
 plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.9, wspace=0.6, hspace=0.6)
 plt.show()

@@ -18,7 +18,7 @@ out = np.zeros(img.shape).reshape(1, -1)
 # Save a size in N
 N = len(a)
 # Replace out array value with relative value
-for i in range(0, N - 1):
+for i in range(N - 1):
     pix = ((a[i] <= img) & (img < a[i + 1])).reshape(1, -1)
     out[np.where(pix)] = np.multiply((img[np.where(pix)] - a[i]), (b[i + 1] - b[i])) / (a[i + 1] - a[i]) + b[i]
 pix = (img == a[N - 1]).reshape(1, -1)
