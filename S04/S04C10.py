@@ -27,7 +27,7 @@ K = 5
 Delta = 0.25
 sigma = 0.1
 Sy, Sx = I.shape
-for i in range(1, N):
+for _ in range(1, N):
     if sigma > 0:
         Io = I
         g4 = style_gauss2D(sigma=sigma)
