@@ -1,8 +1,11 @@
 import cv2
 import matplotlib.pyplot as plt
+
 img = cv2.imread("Finger.BMP",0)
-SE = cv2.getStructuringElement(cv2.MORPH_RECT,(2,2))
-img1 = cv2.morphologyEx(img, cv2.MORPH_ERODE, SE)
+SE = cv2.getStructuringElement(cv2.MORPH_RECT,(2,2))    # Rectangular Kernel
+img1 = cv2.morphologyEx(img, cv2.MORPH_ERODE, SE)       # Erosion
+
+# Visualize
 images=[img,img1]
 titles=['Orginal','Erosion']
 fig1 = plt.figure(figsize=(10, 10))
