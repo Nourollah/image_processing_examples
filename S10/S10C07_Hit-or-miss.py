@@ -1,12 +1,15 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+
 img = cv2.imread("Text.BMP",0)
-B1 = cv2.imread("Kernel.BMP",0)
-B2=cv2.copyMakeBorder(np.zeros(B1.shape,dtype=np.uint8), 1, 1, 1, 1, cv2.BORDER_CONSTANT,value=255)
+B1 = cv2.imread("Kernel.BMP",0) # Kernel
+B2=cv2.copyMakeBorder(np.zeros(B1.shape,dtype=np.uint8), 1, 1, 1, 1, cv2.BORDER_CONSTANT,value=255) # Make kernel B2 and Adding border
 tb1 = cv2.morphologyEx(img, cv2.MORPH_ERODE, B1)
 tb2 = cv2.morphologyEx(~(img), cv2.MORPH_ERODE, B2)
 HitOrMiss=tb1&tb2
+
+# Visualize
 images=[img,B1,HitOrMiss]
 titles=['Text','Kernel','HitOrMiss']
 fig1 = plt.figure(figsize=(20, 2))
