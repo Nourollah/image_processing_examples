@@ -1,6 +1,7 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+
 img = cv2.imread("Mazandaran.bmp",0)
 A = img.copy()
 B = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
@@ -9,6 +10,8 @@ while (A).any():
     O=cv2.morphologyEx(A, cv2.MORPH_OPEN, B)
     Frame=Frame | A - O
     A=cv2.morphologyEx(A, cv2.MORPH_ERODE, B)
+    
+# Visualize
 images=[img,Frame]
 titles=['Original','result']
 fig1 = plt.figure(figsize=(10, 10))
