@@ -1,6 +1,7 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+
 A = cv2.imread("Region.bmp",0)
 B = cv2.getStructuringElement(cv2.MORPH_CROSS,(3,3))
 Px,Py=45,45
@@ -12,6 +13,7 @@ while (X_current != X_last).any():
     X_current=cv2.morphologyEx(X_last, cv2.MORPH_DILATE, B) & ~(A)
 result=X_current|A
 
+# Visualize
 images=[A,result]
 titles=['Original','Filled']
 fig1 = plt.figure(figsize=(10, 10))
