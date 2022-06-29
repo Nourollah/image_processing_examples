@@ -1,8 +1,11 @@
 import cv2
 import matplotlib.pyplot as plt
+
 img = cv2.imread("Text_Shahid_Avini.BMP",0)
-SE = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
-img1 = cv2.morphologyEx(img, cv2.MORPH_DILATE, SE)
+SE = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))    # Rectangular Kernel
+img1 = cv2.morphologyEx(img, cv2.MORPH_DILATE, SE)      # Dilation
+
+# Visualize
 images=[img,img1]
 titles=['Orginal','Dilation']
 fig1 = plt.figure(figsize=(10, 10))
