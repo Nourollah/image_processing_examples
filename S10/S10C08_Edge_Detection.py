@@ -1,15 +1,17 @@
 import cv2
 import matplotlib.pyplot as plt
 img = cv2.imread("coins.BMP",0)
-SE = cv2.getStructuringElement(cv2.MORPH_RECT,(2,2))
-#Internal Edge
-imgO=cv2.morphologyEx(img, cv2.MORPH_ERODE, SE)
+SE = cv2.getStructuringElement(cv2.MORPH_RECT,(2,2))    # Rectangular Kernel
+# Internal Edge
+imgO=cv2.morphologyEx(img, cv2.MORPH_ERODE, SE)         # Erosion
 EI=img-imgO
-#External Edge
-imgD=cv2.morphologyEx(img, cv2.MORPH_DILATE, SE)
+# External Edge
+imgD=cv2.morphologyEx(img, cv2.MORPH_DILATE, SE)        # Dilation
 EO=imgD-img
-#Gradient
+# Gradient
 EG=imgD-imgO
+
+# Visualize
 images=[img,EI,EO,EG]
 titles=['Original','Internal Edge','External Edge','Gradient']
 fig1 = plt.figure(figsize=(15, 15))
