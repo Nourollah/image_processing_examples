@@ -18,25 +18,19 @@ plt.subplot(222)
 plt.imshow(imgRGB)
 plt.title("RGB")
 
-# imgHSV[:, :, 2] = cv2.equalizeHist(imgHSV[:, :, 2])
+
+
+imgHSV_8uc1 = cv2.normalize(imgHSV, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
+imgHSV_8uc1[:, :, 2] = cv2.equalizeHist(imgHSV_8uc1[:, :, 2])
 plt.subplot(223)
-plt.imshow(scl.hsv2rgb(imgHSV))
+plt.imshow(scl.hsv2rgb(imgHSV_8uc1))
 plt.title("HSV")
 
-# imgYIQ[:, :, 0] = cv2.normalize(cv2.equalizeHist(cv2.normalize(imgYIQ[:, :, 0], None, 0, 255, cv2.NORM_MINMAX)), None, 0.0, 1.0, cv2.NORM_MINMAX)
-# imgYIQ[:, :, 0] = yiq1
+imgYIQ_8uc1 = cv2.normalize(imgYIQ, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
+imgYIQ_8uc1[:, :, 0] = cv2.equalizeHist(imgYIQ_8uc1[:, :, 0])
 plt.subplot(224)
-plt.imshow(scl.yiq2rgb(imgYIQ))
-print( imgYIQ[:, :, 0].max)
+plt.imshow(scl.yiq2rgb(imgYIQ_8uc1))
 plt.title("YIQ")
-
-
-
-
-
-
-
-
 
 
 plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.9, wspace=0.6, hspace=0.6)
